@@ -1,24 +1,37 @@
 package com.example.todoapp.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.example.todoapp.enums.TaskStatus;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.FutureOrPresent;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 import java.time.LocalDate;
 
 @Entity
 public class Task {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "Title is required")
     private String title;
+
+    @NotBlank(message = "Description is required")
     private String description;
+
     private boolean completed;
 
-    private LocalDate dueDate;  // ✅ New field
-    private String status;      // ✅ New field
+    @NotNull(message = "Due date is required")
+    @FutureOrPresent(message = "Due date must be today or in the future")
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private LocalDate dueDate;
+
+    @NotNull(message = "Status is required")
+    @Enumerated(EnumType.STRING)
+    private TaskStatus status;
 
     // Getters and Setters
 
@@ -54,8 +67,6 @@ public class Task {
         this.completed = completed;
     }
 
-    // ✅ New Getters and Setters
-
     public LocalDate getDueDate() {
         return dueDate;
     }
@@ -64,11 +75,18 @@ public class Task {
         this.dueDate = dueDate;
     }
 
-    public String getStatus() {
+    public TaskStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(TaskStatus status) {
         this.status = status;
+
+        // Automatically update 'completed' based on status
+        if (status == TaskStatus.COMPLETED || status == TaskStatus.DONE) {
+            this.completed = true;
+        } else {
+            this.completed = false;
+        }
     }
 }
