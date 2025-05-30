@@ -1,6 +1,6 @@
 package com.example.todoapp.dto;
 
-import com.example.todoapp.enums.TaskStatus;  // << THIS IMPORT IS REQUIRED
+import com.example.todoapp.enums.TaskStatus;
 
 public class StatusUpdateRequest {
 

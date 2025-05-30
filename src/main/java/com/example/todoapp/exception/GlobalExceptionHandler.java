@@ -41,7 +41,7 @@ public class GlobalExceptionHandler {
         if (formatEx != null) {
             Class<?> targetType = formatEx.getTargetType();
 
-            // Debug print (optional - remove in production)
+
             System.out.println("InvalidFormatException targetType: " + targetType.getName());
 
             if (LocalDate.class.equals(targetType)) {
@@ -58,7 +58,7 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
-    // Handle IllegalArgumentException thrown by your enum (TaskStatus)
+
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<Map<String, Object>> handleIllegalArgumentException(IllegalArgumentException ex) {
         Map<String, Object> response = new HashMap<>();
@@ -73,7 +73,7 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
-    // Helper method to find InvalidFormatException anywhere in the cause chain
+
     private InvalidFormatException findInvalidFormatException(Throwable ex) {
         if (ex == null) {
             return null;

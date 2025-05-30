@@ -33,7 +33,11 @@ public class Task {
     @Enumerated(EnumType.STRING)
     private TaskStatus status;
 
-    // Getters and Setters
+    //  Properly placed user field with relationship mapping
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
+
 
     public Long getId() {
         return id;
@@ -81,12 +85,13 @@ public class Task {
 
     public void setStatus(TaskStatus status) {
         this.status = status;
+    }
 
-        // Automatically update 'completed' based on status
-        if (status == TaskStatus.COMPLETED || status == TaskStatus.DONE) {
-            this.completed = true;
-        } else {
-            this.completed = false;
-        }
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }
