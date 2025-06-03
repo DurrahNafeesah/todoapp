@@ -1,23 +1,21 @@
 package com.example.todoapp.dto;
 
-import com.example.todoapp.enums.TaskStatus;
-
 public class StatusUpdateRequest {
 
-    private TaskStatus status;
+    private Long statusId;
 
     public StatusUpdateRequest() {
     }
 
-    public StatusUpdateRequest(TaskStatus status) {
-        this.status = status;
+    public StatusUpdateRequest(Long statusId) {
+        this.statusId = statusId;
     }
 
-    public TaskStatus getStatus() {
-        return status;
+    public Long getStatusId() {
+        return statusId;
     }
 
-    public void setStatus(TaskStatus status) {
-        this.status = status;
+    public void setStatusId(Long statusId) {
+        this.statusId = statusId;
     }
 }

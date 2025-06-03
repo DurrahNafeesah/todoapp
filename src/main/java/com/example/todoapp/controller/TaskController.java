@@ -4,6 +4,7 @@ import com.example.todoapp.dto.StatusUpdateRequest;
 import com.example.todoapp.entity.Task;
 import com.example.todoapp.service.TaskService;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -37,6 +38,37 @@ public class TaskController {
         List<Task> tasks = taskService.getAllTasks();
         return ResponseEntity.ok(tasks);
     }
+    @GetMapping("/sort/{field}")
+    public ResponseEntity<List<Task>> getTaskBySorting(@PathVariable ("field") String field) {
+        List<Task> tasks;
+        tasks = taskService.findTaskBySorting(field);
+        return ResponseEntity.ok(tasks);
+    }
+
+    @GetMapping("/pagination/{offset}/{pageSize}")
+    public ResponseEntity<Page<Task>> getTaskBySorting(@PathVariable int offset,@PathVariable int pageSize) {
+        Page<Task> tasks;
+        tasks = (Page<Task>) taskService.findTaskByPagination(offset,pageSize);
+        return ResponseEntity.ok(tasks);
+    }
+//    @GetMapping("/pagination/{offset}/{pageSize}/{field}")
+//    public ResponseEntity<List<Task>> getTaskBySorting(@PathVariable int offset,@PathVariable int pageSize,@PathVariable ("field") String field) {
+//        List<Task> tasks;
+//        tasks = taskService.findTaskByPaginationAndSorting(offset,pageSize,field);
+//        return ResponseEntity.ok(tasks);
+//    }
+@GetMapping("/search")
+public ResponseEntity<Page<Task>> searchTasksWithPaginationAndSorting(
+        @RequestParam String keyword,
+        @RequestParam int offset,
+        @RequestParam int pageSize,
+        @RequestParam ("field")String sortField) {
+
+    Page<Task> tasks = taskService.searchTasksWithPaginationAndSorting(keyword, offset, pageSize, sortField);
+    return ResponseEntity.ok(tasks);
+}
+
+
 
     @GetMapping("/{id}")
     public ResponseEntity<Task> getTask(@PathVariable Long id) {
@@ -53,7 +85,7 @@ public class TaskController {
 
     @PutMapping("/{id}/status")
     public ResponseEntity<Task> updateTaskStatus(@PathVariable Long id, @RequestBody StatusUpdateRequest statusUpdateRequest) {
-        Task task = taskService.updateStatus(id, statusUpdateRequest.getStatus());
+        Task task = taskService.updateStatus(id, statusUpdateRequest.getStatusId());
         return ResponseEntity.ok(task);
     }
 

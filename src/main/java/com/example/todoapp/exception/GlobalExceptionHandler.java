@@ -46,7 +46,7 @@ public class GlobalExceptionHandler {
 
             if (LocalDate.class.equals(targetType)) {
                 response.put("error", "Due date must be in yyyy-MM-dd format");
-            } else if (targetType.equals(com.example.todoapp.enums.TaskStatus.class)) {
+            } else if (targetType.equals(com.example.todoapp.entity.TaskStatusMaster.class)) {
                 response.put("error", "Invalid status value. Allowed values are: NEW, STARTED, DONE, COMPLETED.");
             } else {
                 response.put("error", "Malformed JSON request");

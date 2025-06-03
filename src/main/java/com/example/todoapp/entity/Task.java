@@ -1,6 +1,6 @@
 package com.example.todoapp.entity;
 
-import com.example.todoapp.enums.TaskStatus;
+import com.example.todoapp.entity.TaskStatusMaster;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.FutureOrPresent;
@@ -30,8 +30,12 @@ public class Task {
     private LocalDate dueDate;
 
     @NotNull(message = "Status is required")
-    @Enumerated(EnumType.STRING)
-    private TaskStatus status;
+//    @Enumerated(EnumType.STRING)
+//    private TaskStatus status;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "status_id", nullable = false)
+    private TaskStatusMaster status;
+
 
     //  Properly placed user field with relationship mapping
     @ManyToOne(fetch = FetchType.LAZY)
@@ -79,11 +83,11 @@ public class Task {
         this.dueDate = dueDate;
     }
 
-    public TaskStatus getStatus() {
+    public @NotNull(message = "Status is required") TaskStatusMaster getStatus() {
         return status;
     }
 
-    public void setStatus(TaskStatus status) {
+    public void setStatus(@NotNull TaskStatusMaster status) {
         this.status = status;
     }
 
