@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,9 +20,11 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
     List<Task> findByUser(User user,Sort sort);
     Optional<Task> findByIdAndUser(Long id, User user);
 
-    List<Task> findByUser(User user, PageRequest pageRequest);
+//    List<Task> findByUser(User user, PageRequest pageRequest);
     Page<Task> findByUser(User user, Pageable pageable);
 
-    // ✅ Add this method for searching by title + pagination + sorting
+    // ✅ title + pagination + sorting
     Page<Task> findByUserAndTitleContainingIgnoreCase(User user, String keyword, Pageable pageable);
+    List<Task> findByDueDateBetweenAndCompletedFalse(LocalDateTime start, LocalDateTime end);
+
 }

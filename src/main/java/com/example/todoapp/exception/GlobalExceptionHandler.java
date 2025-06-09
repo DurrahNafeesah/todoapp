@@ -45,7 +45,7 @@ public class GlobalExceptionHandler {
             System.out.println("InvalidFormatException targetType: " + targetType.getName());
 
             if (LocalDate.class.equals(targetType)) {
-                response.put("error", "Due date must be in yyyy-MM-dd format");
+                response.put("error", "Due date must be in yyyy-MM-dd'T'HH:mm:ss format");
             } else if (targetType.equals(com.example.todoapp.entity.TaskStatusMaster.class)) {
                 response.put("error", "Invalid status value. Allowed values are: NEW, STARTED, DONE, COMPLETED.");
             } else {

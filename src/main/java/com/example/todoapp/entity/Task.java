@@ -7,7 +7,7 @@ import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 public class Task {
@@ -26,8 +26,8 @@ public class Task {
 
     @NotNull(message = "Due date is required")
     @FutureOrPresent(message = "Due date must be today or in the future")
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    private LocalDate dueDate;
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    private LocalDateTime dueDate;
 
     @NotNull(message = "Status is required")
 //    @Enumerated(EnumType.STRING)
@@ -75,11 +75,11 @@ public class Task {
         this.completed = completed;
     }
 
-    public LocalDate getDueDate() {
+    public LocalDateTime getDueDate() {
         return dueDate;
     }
 
-    public void setDueDate(LocalDate dueDate) {
+    public void setDueDate(LocalDateTime dueDate) {
         this.dueDate = dueDate;
     }
 

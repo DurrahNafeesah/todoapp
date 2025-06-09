@@ -14,11 +14,11 @@ public class TaskStatusMaster {
     private String name;
 
     // Constructors
-    public TaskStatusMaster() {}
-
-    public TaskStatusMaster(String name) {
-        this.name = name;
-    }
+//    public TaskStatusMaster() {}
+//
+//    public TaskStatusMaster(String name) {
+//        this.name = name;
+//    }
 
     public TaskStatusMaster(Object o, String aNew) {
     }
